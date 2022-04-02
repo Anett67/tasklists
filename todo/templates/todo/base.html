@@ -1,0 +1,14 @@
+{% if user.is_authenticated %}
+
+<p>Vous est connecté en tant que: {{ user.username }}</p>
+
+<div>
+    <a href="#">Se déconnecter</a>
+</div>
+
+{% else %}
+
+<a href="#">Créer un compte</a>
+<a href="#">Se Connecter</a>
+
+{% endif %} {% block content %}{% endblock %}

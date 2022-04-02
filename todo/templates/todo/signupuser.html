@@ -1,3 +1,5 @@
+{% extends "todo/base.html" %} {% block content %}
+
 <h1>Créer un compte</h1>
 
 <h2>{{ error }}</h2>
@@ -6,3 +8,5 @@
     {% csrf_token %} {{ form.as_p }}
     <button type="submit">Créer un compte</button>
 </form>
+
+{% endblock %}
