@@ -22,6 +22,8 @@ urlpatterns = [
 
     # Auth
     path('inscription/', views.signupuser, name="signupuser"),
+    path('connexion/', views.loginuser, name="loginuser"),
+    path('déconnexion', views.logoutuser, name="logoutuser"),
 
     # Todos
     path('listes/', views.currenttasks, name="currenttasks")
