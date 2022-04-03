@@ -1,3 +1,9 @@
 {% extends "todo/base.html" %} {% block content %}
 <h1>Mes listes de tâches</h1>
+
+<ul>
+    {% for list in tasklists %}
+    <li><a href="{% url 'viewtasklist' list.id %}">{{ list.title }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock %}

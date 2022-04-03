@@ -25,8 +25,12 @@ urlpatterns = [
     path('connexion/', views.loginuser, name="loginuser"),
     path('déconnexion', views.logoutuser, name="logoutuser"),
 
-    # Todos
+    # Tasklists
     path('listes/', views.currenttasks, name="currenttasks"),
     path('listes/nouveau/', views.createtasklist, name="createtasklist"),
+    path('listes/<int:tasklist_pk>/', views.viewtasklist, name="viewtasklist"),
+    path('listes/<int:tasklist_pk>/edition', views.updatetasklist, name="updatetasklist"),
+
+    # Task
     path('taches/nouveau/', views.createtask, name="createTask")
 ]

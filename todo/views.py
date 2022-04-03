@@ -1,9 +1,11 @@
 from django.db import IntegrityError
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+
+from todo.models import Tasklist, Task
 from .forms import TasklistForm, TaskForm
 
 def signupuser(request):
@@ -28,7 +30,8 @@ def signupuser(request):
             })
 
 def currenttasks(request):
-    return render(request, 'todo/currenttasks.html')
+    tasklists = Tasklist.objects.filter(user=request.user, archived__isnull=True)
+    return render(request, 'todo/currenttasks.html', {'tasklists': tasklists})
 
 def logoutuser(request):
     if request.method == 'POST':
@@ -69,3 +72,20 @@ def createtask(request):
         else:
             login(request, user)
             return redirect('currenttasks')
+
+def viewtasklist(request, tasklist_pk):
+    tasklist = get_object_or_404(Tasklist, pk=tasklist_pk)
+    return render(request, 'todo/viewtasklist.html', {'tasklist':tasklist})
+
+def updatetasklist(request, tasklist_pk):
+    tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
+    if request.method == "GET":
+        form = TasklistForm(instance=tasklist)
+        return render(request, 'todo/updatetasklist.html', {'tasklist':tasklist, 'form':form})
+    else:
+        try:
+            form = TasklistForm(request.POST, instance=tasklist)
+            form.save()
+            return redirect('viewtasklist', tasklist_pk=tasklist.pk)
+        except ValueError:
+            return render(request, 'todo/updatetasklist.html', {'tasklist':tasklist, 'form':form, 'error':'Titre invalide'})
