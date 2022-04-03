@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -89,3 +90,11 @@ def updatetasklist(request, tasklist_pk):
             return redirect('viewtasklist', tasklist_pk=tasklist.pk)
         except ValueError:
             return render(request, 'todo/updatetasklist.html', {'tasklist':tasklist, 'form':form, 'error':'Titre invalide'})
+
+
+def archivetasklist(request, tasklist_pk):
+    tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
+    if request.method == 'POST':
+        tasklist.archived = timezone.now()
+        tasklist.save()
+        return redirect('viewtasklist', tasklist_pk=tasklist.pk)

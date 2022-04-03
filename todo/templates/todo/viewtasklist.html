@@ -4,4 +4,9 @@
 
 <a href="{% url 'updatetasklist' tasklist.id %}">Modifier la liste</a>
 
+<form action="{% url 'archivetasklist' tasklist.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Archiver la liste</button>
+</form>
+
 {% endblock %}

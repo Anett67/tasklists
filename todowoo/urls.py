@@ -30,6 +30,7 @@ urlpatterns = [
     path('listes/nouveau/', views.createtasklist, name="createtasklist"),
     path('listes/<int:tasklist_pk>/', views.viewtasklist, name="viewtasklist"),
     path('listes/<int:tasklist_pk>/edition', views.updatetasklist, name="updatetasklist"),
+    path('listes/<int:tasklist_pk>/archive', views.archivetasklist, name="archivetasklist"),
 
     # Task
     path('taches/nouveau/', views.createtask, name="createTask")
