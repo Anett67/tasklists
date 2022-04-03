@@ -1,5 +1,7 @@
 {% if user.is_authenticated %}
 
+<a href="{% url 'currenttasks' %}">Listes actives</a>
+<a href="{% url 'archivedtasks' %}">Listes archivées</a>
 <p>Vous est connecté en tant que: {{ user.username }}</p>
 
 <form action="{% url 'logoutuser' %}" method="POST">

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 from todo.models import Tasklist, Task
 from .forms import TasklistForm, TaskForm
@@ -30,14 +31,17 @@ def signupuser(request):
                 'error':'Les mots de passe ne sont pas identiques.'
             })
 
+@login_required
 def currenttasks(request):
     tasklists = Tasklist.objects.filter(user=request.user, archived__isnull=True)
     return render(request, 'todo/currenttasks.html', {'tasklists': tasklists})
 
+@login_required
 def archivedtasks(request):
     tasklists = Tasklist.objects.filter(user=request.user, archived__isnull=False).order_by('-archived')
     return render(request, 'todo/archivedtasks.html', {'tasklists': tasklists})
 
+@login_required
 def logoutuser(request):
     if request.method == 'POST':
         logout(request)
@@ -54,6 +58,7 @@ def loginuser(request):
                 login(request, user)
                 return redirect('currenttasks')
 
+@login_required
 def createtasklist(request):
     if request.method == "GET":
         return render(request, 'todo/createtasklist.html', {'form':TasklistForm()})
@@ -67,6 +72,7 @@ def createtasklist(request):
         except ValueError:
             return render(request, 'todo/createtasklist.html', {'form':TasklistForm(), 'error':'Titre invalide'}) 
 
+@login_required
 def createtask(request):
     if request.method == "GET":
         return render(request, 'todo/createtask.html', {'form':TaskForm()})
@@ -78,10 +84,12 @@ def createtask(request):
             login(request, user)
             return redirect('currenttasks')
 
+@login_required
 def viewtasklist(request, tasklist_pk):
     tasklist = get_object_or_404(Tasklist, pk=tasklist_pk)
     return render(request, 'todo/viewtasklist.html', {'tasklist':tasklist})
 
+@login_required
 def updatetasklist(request, tasklist_pk):
     tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
     if request.method == "GET":
@@ -95,7 +103,7 @@ def updatetasklist(request, tasklist_pk):
         except ValueError:
             return render(request, 'todo/updatetasklist.html', {'tasklist':tasklist, 'form':form, 'error':'Titre invalide'})
 
-
+@login_required
 def archivetasklist(request, tasklist_pk):
     tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
     if request.method == 'POST':
@@ -103,6 +111,7 @@ def archivetasklist(request, tasklist_pk):
         tasklist.save()
         return redirect('currenttasks')
 
+@login_required
 def activatetasklist(request, tasklist_pk):
     tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
     if request.method == 'POST':
@@ -110,6 +119,7 @@ def activatetasklist(request, tasklist_pk):
         tasklist.save()
         return redirect('currenttasks')
 
+@login_required
 def deletetasklist(request, tasklist_pk):
     tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
     if request.method == 'POST':

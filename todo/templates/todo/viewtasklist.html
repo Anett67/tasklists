@@ -14,4 +14,10 @@
     <button type="submit">Supprimer la liste</button>
 </form>
 
+<ul>
+    {% for task in tasklist.task_set.all %}
+    <li>{{ task.title }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
