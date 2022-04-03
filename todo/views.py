@@ -34,6 +34,10 @@ def currenttasks(request):
     tasklists = Tasklist.objects.filter(user=request.user, archived__isnull=True)
     return render(request, 'todo/currenttasks.html', {'tasklists': tasklists})
 
+def archivedtasks(request):
+    tasklists = Tasklist.objects.filter(user=request.user, archived__isnull=False).order_by('-archived')
+    return render(request, 'todo/archivedtasks.html', {'tasklists': tasklists})
+
 def logoutuser(request):
     if request.method == 'POST':
         logout(request)
@@ -96,6 +100,13 @@ def archivetasklist(request, tasklist_pk):
     tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
     if request.method == 'POST':
         tasklist.archived = timezone.now()
+        tasklist.save()
+        return redirect('currenttasks')
+
+def activatetasklist(request, tasklist_pk):
+    tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
+    if request.method == 'POST':
+        tasklist.archived = None
         tasklist.save()
         return redirect('currenttasks')
 

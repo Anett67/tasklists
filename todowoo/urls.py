@@ -27,10 +27,12 @@ urlpatterns = [
 
     # Tasklists
     path('listes/', views.currenttasks, name="currenttasks"),
+    path('listes/archives', views.archivedtasks, name="archivedtasks"),
     path('listes/nouveau/', views.createtasklist, name="createtasklist"),
     path('listes/<int:tasklist_pk>/', views.viewtasklist, name="viewtasklist"),
     path('listes/<int:tasklist_pk>/edition', views.updatetasklist, name="updatetasklist"),
     path('listes/<int:tasklist_pk>/archive', views.archivetasklist, name="archivetasklist"),
+    path('listes/<int:tasklist_pk>/activer', views.activatetasklist, name="activatetasklist"),
     path('listes/<int:tasklist_pk>/delete', views.deletetasklist, name="deletetasklist"),
 
 

@@ -1,0 +1,15 @@
+{% extends "todo/base.html" %} {% block content %}
+<h1>Listes archivées</h1>
+
+<ul>
+    {% for list in tasklists %}
+    <li>
+        {{ list.title }}
+        <form action="{% url 'activatetasklist' list.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Réactiver la liste</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
