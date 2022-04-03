@@ -9,4 +9,9 @@
     <button type="submit">Archiver la liste</button>
 </form>
 
+<form action="{% url 'deletetasklist' tasklist.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Supprimer la liste</button>
+</form>
+
 {% endblock %}

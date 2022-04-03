@@ -97,4 +97,10 @@ def archivetasklist(request, tasklist_pk):
     if request.method == 'POST':
         tasklist.archived = timezone.now()
         tasklist.save()
-        return redirect('viewtasklist', tasklist_pk=tasklist.pk)
+        return redirect('currenttasks')
+
+def deletetasklist(request, tasklist_pk):
+    tasklist = get_object_or_404(Tasklist, pk=tasklist_pk, user=request.user)
+    if request.method == 'POST':
+        tasklist.delete()
+        return redirect('currenttasks')
