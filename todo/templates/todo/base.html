@@ -10,8 +10,11 @@
 </form>
 
 {% else %}
-
-<a href="{% url 'signupuser' %}">Créer un compte</a>
-<a href="{% url 'loginuser' %}">Se Connecter</a>
-
+<div>
+    {% if request.resolver_match.url_name == 'loginuser' %}
+    <a href="{% url 'signupuser' %}">Créer un compte</a>
+    {% else %}
+    <a href="{% url 'loginuser' %}">Se Connecter</a>
+    {% endif %}
+</div>
 {% endif %} {% block content %}{% endblock %}
