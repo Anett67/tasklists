@@ -76,7 +76,7 @@ def createtasklist(request):
 def createtask(request, tasklist_pk):
     if request.method == "GET":
         tasklist = get_object_or_404(Tasklist, pk=tasklist_pk)
-        return render(request, 'todo/createtask.html', {'form':TaskForm(), 'tasklist': tasklist })
+        return render(request, 'todo/createtask.html', {'form':TaskForm(), 'tasklist_pk': tasklist_pk })
     else:
         try:
             form = TaskForm(request.POST)
@@ -105,6 +105,20 @@ def updatetasklist(request, tasklist_pk):
             return redirect('viewtasklist', tasklist_pk=tasklist.pk)
         except ValueError:
             return render(request, 'todo/updatetasklist.html', {'tasklist':tasklist, 'form':form, 'error':'Titre invalide'})
+
+@login_required
+def updatetask(request, task_pk):
+    task = get_object_or_404(Task, pk=task_pk)
+    if request.method == "GET":
+        form = TaskForm(instance=task)
+        return render(request, 'todo/updatetask.html', {'task': task, 'form':form})
+    else:
+        try:
+            form = TaskForm(request.POST, instance=task)
+            form.save()
+            return redirect('viewtasklist', tasklist_pk=task.tasklist_id)
+        except ValueError:
+            return render(request, 'todo/updatetask.html', {'task':task, 'form':form, 'error':'Titre ou descripion invalide'})
 
 @login_required
 def archivetasklist(request, tasklist_pk):

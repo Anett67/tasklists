@@ -21,7 +21,7 @@
 
 <ul>
     {% for task in tasklist.task_set.all %}
-    <li>{{ task.title }}</li>
+    <li>{{ task.title }} <a href="{% url 'updatetask' task.id %}">Modifier</a></li>
     {% endfor %}
 </ul>
 
