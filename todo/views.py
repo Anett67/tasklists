@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.utils import timezone
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
@@ -148,4 +149,20 @@ def deletetask(request, task_pk):
     task = get_object_or_404(Task, pk=task_pk)
     if request.method == 'POST':
         task.delete()
+        return redirect('viewtasklist', tasklist_pk=task.tasklist_id)
+
+@login_required
+def completetask(request, task_pk):
+    task = get_object_or_404(Task, pk=task_pk)
+    if request.method == 'POST':
+        task.datecompleted = timezone.now()
+        task.save()
+        return redirect('viewtasklist', tasklist_pk=task.tasklist_id)
+
+@login_required
+def reactivatetask(request, task_pk):
+    task = get_object_or_404(Task, pk=task_pk)
+    if request.method == 'POST':
+        task.datecompleted = None
+        task.save()
         return redirect('viewtasklist', tasklist_pk=task.tasklist_id)

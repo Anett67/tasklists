@@ -17,6 +17,12 @@ class Tasklist(models.Model):
     def completed_tasks_count(self):
         return self.task_set.filter(datecompleted__isnull=False).count()
 
+    def tasks_to_do(self):
+        return self.task_set.filter(datecompleted__isnull=True)
+
+    def completed_tasks(self):
+        return self.task_set.filter(datecompleted__isnull=False)
+
 class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)

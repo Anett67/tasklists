@@ -19,11 +19,40 @@
     <button type="submit">Ajouter une tâche</button>
 </form>
 
+<h2>Tâches en cours</h2>
+
 <ul>
-    {% for task in tasklist.task_set.all %}
+    {% for task in tasklist.tasks_to_do %}
     <li>
-        {{ task.title }}
-        <a href="{% url 'updatetask' task.id %}">Modifier</a>
+        <span>{{ task.title }}</span>
+        <form action="{% url 'completetask' task.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Compléter</button>
+        </form>
+        <button>
+            <a href="{% url 'updatetask' task.id %}">Modifier</a>
+        </button>
+        <form action="{% url 'deletetask' task.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Tâches complété</h2>
+
+<ul>
+    {% for task in tasklist.completed_tasks %}
+    <li>
+        <span>{{ task.title }}</span>
+        <form action="{% url 'reactivatetask' task.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Réactiver</button>
+        </form>
+        <button>
+            <a href="{% url 'updatetask' task.id %}">Modifier</a>
+        </button>
         <form action="{% url 'deletetask' task.id %}" method="POST">
             {% csrf_token %}
             <button type="submit">Supprimer</button>
