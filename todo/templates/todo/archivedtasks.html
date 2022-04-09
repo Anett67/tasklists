@@ -5,6 +5,7 @@
     {% for list in tasklists %}
     <li>
         {{ list.title }}
+        <span class="list-completion">{{ list.completed_tasks_count }}/{{ list.tasks_count }}</span>
         <form action="{% url 'activatetasklist' list.id %}" method="POST">
             {% csrf_token %}
             <button type="submit">Réactiver la liste</button>

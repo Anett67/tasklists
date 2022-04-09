@@ -11,6 +11,12 @@ class Tasklist(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def tasks_count(self):
+        return self.task_set.count()
+
+    def completed_tasks_count(self):
+        return self.task_set.filter(datecompleted__isnull=False).count()
+
 class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)

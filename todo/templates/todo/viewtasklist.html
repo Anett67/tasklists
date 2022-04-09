@@ -1,6 +1,6 @@
 {% extends "todo/base.html" %} {% block content %}
 
-<h1>{{ tasklist.title }}</h1>
+<h1>{{ tasklist.title }}<span class="list-completion">{{ tasklist.completed_tasks_count }}/{{ tasklist.tasks_count }}</span></h1>
 
 <a href="{% url 'updatetasklist' tasklist.id %}">Modifier la liste</a>
 

@@ -3,7 +3,10 @@
 
 <ul>
     {% for list in tasklists %}
-    <li><a href="{% url 'viewtasklist' list.id %}">{{ list.title }}</a></li>
+    <li>
+        <a href="{% url 'viewtasklist' list.id %}">{{ list.title }}</a>
+        <span class="list-completion">{{ list.completed_tasks_count }}/{{ list.tasks_count }}</span>
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}
