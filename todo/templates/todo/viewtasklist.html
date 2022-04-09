@@ -14,6 +14,11 @@
     <button type="submit">Supprimer la liste</button>
 </form>
 
+<form action="{% url 'createtask' tasklist.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Ajouter une tâche</button>
+</form>
+
 <ul>
     {% for task in tasklist.task_set.all %}
     <li>{{ task.title }}</li>

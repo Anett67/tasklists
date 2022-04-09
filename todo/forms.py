@@ -10,4 +10,4 @@ class TasklistForm(ModelForm):
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'priority', 'tasklist']
+        fields = ['title', 'description', 'priority']

@@ -1,0 +1,13 @@
+{% extends "todo/base.html" %} {% block content %}
+
+<h1>Ajouter une tâche</h1>
+<a href="{% url 'viewtasklist' tasklist.id %}">{{ tasklist.title }}</a>
+
+<h2>{{ error }}</h2>
+
+<form action="" method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Enregistrer</button>
+</form>
+
+{% endblock %}

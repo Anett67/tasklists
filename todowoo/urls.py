@@ -26,7 +26,7 @@ urlpatterns = [
     path('déconnexion', views.logoutuser, name="logoutuser"),
 
     # Tasklists
-    path('listes/', views.currenttasks, name="currenttasks"),
+    path('', views.currenttasks, name="currenttasks"),
     path('listes/archives', views.archivedtasks, name="archivedtasks"),
     path('listes/nouveau/', views.createtasklist, name="createtasklist"),
     path('listes/<int:tasklist_pk>/', views.viewtasklist, name="viewtasklist"),
@@ -37,5 +37,5 @@ urlpatterns = [
 
 
     # Task
-    path('taches/nouveau/', views.createtask, name="createTask")
+    path('listes/<int:tasklist_pk>/taches/nouveau/', views.createtask, name="createtask")
 ]

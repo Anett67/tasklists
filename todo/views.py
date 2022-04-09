@@ -73,16 +73,19 @@ def createtasklist(request):
             return render(request, 'todo/createtasklist.html', {'form':TasklistForm(), 'error':'Titre invalide'}) 
 
 @login_required
-def createtask(request):
+def createtask(request, tasklist_pk):
     if request.method == "GET":
-        return render(request, 'todo/createtask.html', {'form':TaskForm()})
+        tasklist = get_object_or_404(Tasklist, pk=tasklist_pk)
+        return render(request, 'todo/createtask.html', {'form':TaskForm(), 'tasklist': tasklist })
     else:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is None:
-            return render(request, 'todo/createtask.html', {'form':TaskForm(), 'error':'Identifiants invalides.'})
-        else:
-            login(request, user)
-            return redirect('currenttasks')
+        try:
+            form = TaskForm(request.POST)
+            newtask = form.save(commit=False)
+            newtask.tasklist_id = tasklist_pk
+            newtask.save()
+            return redirect('viewtasklist', tasklist_pk=tasklist_pk)
+        except ValueError:
+            return render(request, 'todo/createtask.html', {'form':TaskForm(), 'error':'Titre ou description invalide'}) 
 
 @login_required
 def viewtasklist(request, tasklist_pk):
