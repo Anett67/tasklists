@@ -21,7 +21,14 @@
 
 <ul>
     {% for task in tasklist.task_set.all %}
-    <li>{{ task.title }} <a href="{% url 'updatetask' task.id %}">Modifier</a></li>
+    <li>
+        {{ task.title }}
+        <a href="{% url 'updatetask' task.id %}">Modifier</a>
+        <form action="{% url 'deletetask' task.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
     {% endfor %}
 </ul>
 

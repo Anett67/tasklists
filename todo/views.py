@@ -142,3 +142,10 @@ def deletetasklist(request, tasklist_pk):
     if request.method == 'POST':
         tasklist.delete()
         return redirect('currenttasks')
+
+@login_required
+def deletetask(request, task_pk):
+    task = get_object_or_404(Task, pk=task_pk)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('viewtasklist', tasklist_pk=task.tasklist_id)
