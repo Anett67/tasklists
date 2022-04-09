@@ -19,6 +19,8 @@
     <button type="submit">Ajouter une tâche</button>
 </form>
 
+{% if tasklist.tasks_to_to %}
+
 <h2>Tâches en cours</h2>
 
 <ul>
@@ -39,6 +41,8 @@
     </li>
     {% endfor %}
 </ul>
+
+{% endif %} {% if tasklist.tasks_to_to %}
 
 <h2>Tâches complété</h2>
 
@@ -61,4 +65,4 @@
     {% endfor %}
 </ul>
 
-{% endblock %}
+{% endif %} {% endblock %}
