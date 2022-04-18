@@ -16,7 +16,7 @@ class Profil(models.Model):
 
     def theme_url(self):
         if not self.theme:
-            return 'css/bootstrap.min.css'
+            return 'css/sandstone/bootstrap.min.css'
 
         return 'css/%s/bootstrap.min.css' % self.theme.name
 

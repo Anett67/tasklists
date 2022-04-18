@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from todo.models import Tasklist, Task, Profil, Theme
 from .forms import TasklistForm, TaskForm, ProfileForm
@@ -32,6 +34,11 @@ def signupuser(request):
                 'form':UserCreationForm(), 
                 'error':'Les mots de passe ne sont pas identiques.'
             })
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profil.objects.create(user=instance)
 
 @login_required
 def currenttasks(request):
