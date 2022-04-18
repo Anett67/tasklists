@@ -10,7 +10,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 from todo.models import Tasklist, Task, Profil, Theme
-from .forms import TasklistForm, TaskForm
+from .forms import TasklistForm, TaskForm, ProfileForm
 
 def signupuser(request):
     if request.method == "GET":
@@ -170,8 +170,13 @@ def reactivatetask(request, task_pk):
 
 @login_required
 def themechange(request):
-    profil = get_object_or_404(Profil, user=request.user)
-    if request.method == 'POST':
-        profil.theme = request.POST['theme_id']
-        profil.save()
-        return HttpResponseRedirect(request.path_info)
+    profile = get_object_or_404(Profil, user=request.user)
+    if request.method == "GET":
+        return render(request, 'todo/changetheme.html', {'form':ProfileForm()})
+    else:
+        try:
+            form = ProfileForm(request.POST, instance=profile)
+            form.save()
+            return redirect('themechange')
+        except ValueError:
+            return render(request, 'todo/changetheme.html', {'form':form, 'error':'Le thème n\'existe pas'})

@@ -15,10 +15,11 @@
 
         <a href="{% url 'currenttasks' %}">Listes actives</a>
         <a href="{% url 'archivedtasks' %}">Listes archivées</a>
+        <a href="{% url 'themechange' %}">Changer de thème</a>
         <p>Vous est connecté en tant que: {{ user.username }}</p>
         <form action="{% url 'logoutuser' %}" method="POST">
             {% csrf_token %}
-            <button btn="btn btn-primary" type="submit">Se déconnecter</button>
+            <button class="btn btn-secondary" type="submit">Se déconnecter</button>
         </form>
 
         {% else %}
