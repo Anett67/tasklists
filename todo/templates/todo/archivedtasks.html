@@ -1,16 +1,24 @@
 {% extends "todo/base.html" %} {% block content %}
 <h1>Listes archivées</h1>
-
-<ul>
-    {% for list in tasklists %}
-    <li>
-        {{ list.title }}
-        <span class="list-completion">{{ list.completed_tasks_count }}/{{ list.tasks_count }}</span>
-        <form action="{% url 'activatetasklist' list.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Réactiver la liste</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for list in tasklists %}
+        <tr>
+            <th>{{ list.title }}</th>
+            <td>
+                <form action="{% url 'activatetasklist' list.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-success" type="submit">Réactiver la liste</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

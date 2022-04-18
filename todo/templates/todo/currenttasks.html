@@ -1,16 +1,24 @@
 {% extends "todo/base.html" %} {% block content %}
 <h1>Mes listes de tâches</h1>
 
-<button>
-    <a href="{% url 'createtasklist' %}">Ajouter une liste</a>
+<button class="btn btn-primary">
+    <a class="text-white" href="{% url 'createtasklist' %}">Ajouter une liste</a>
 </button>
 
-<ul>
-    {% for list in tasklists %}
-    <li>
-        <a href="{% url 'viewtasklist' list.id %}">{{ list.title }}</a>
-        <span class="list-completion">{{ list.completed_tasks_count }}/{{ list.tasks_count }}</span>
-    </li>
-    {% endfor %}
-</ul>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Progression</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for list in tasklists %}
+        <tr>
+            <th scope="col"><a href="{% url 'viewtasklist' list.id %}">{{ list.title }}</a></th>
+            <td><span class="list-completion">{{ list.completed_tasks_count }}/{{ list.tasks_count }}</span></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
