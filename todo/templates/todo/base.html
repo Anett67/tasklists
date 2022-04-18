@@ -6,7 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {% load static %}
         <!-- Bootstrap CSS -->
+        {% if user.is_authenticated %}
         <link rel="stylesheet" type="text/css" href="{% static user.profil.theme_url %}" />
+        {% else %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sandstone/bootstrap.min.css' %}" />
+        {% endif %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
         <title>Portfolio</title>
     </head>
@@ -39,13 +43,15 @@
         </nav>
 
         {% else %}
-        <div>
-            {% if request.resolver_match.url_name == 'loginuser' %}
-            <a href="{% url 'signupuser' %}">Créer un compte</a>
-            {% else %}
-            <a href="{% url 'loginuser' %}">Se Connecter</a>
-            {% endif %}
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="btn btn-primary mx-2">
+                {% if request.resolver_match.url_name == 'loginuser' %}
+                <a href="{% url 'signupuser' %}">Créer un compte</a>
+                {% else %}
+                <a href="{% url 'loginuser' %}">Se Connecter</a>
+                {% endif %}
+            </button>
+        </nav>
         {% endif %}
         <div class="container mt-3">{% block content %}{% endblock %}</div>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
