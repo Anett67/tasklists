@@ -12,15 +12,31 @@
     </head>
     <body>
         {% if user.is_authenticated %}
-
-        <a href="{% url 'currenttasks' %}">Listes actives</a>
-        <a href="{% url 'archivedtasks' %}">Listes archivées</a>
-        <a href="{% url 'themechange' %}">Changer de thème</a>
-        <p>Vous est connecté en tant que: {{ user.username }}</p>
-        <form action="{% url 'logoutuser' %}" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-secondary" type="submit">Se déconnecter</button>
-        </form>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mx-2">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'currenttasks' %}active{% endif %}" href="{% url 'currenttasks' %}">Listes actives</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'archivedtasks' %}active{% endif %}" href="{% url 'archivedtasks' %}">Listes archivées</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'themechange' %}active{% endif %}" href="{% url 'themechange' %}">Changer de thème</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center flex-wrap mx-2">
+                    <p class="greeting text-secondary">Bonjour, {{ user.username }}</p>
+                    <form action="{% url 'logoutuser' %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-secondary" type="submit">Se déconnecter</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
 
         {% else %}
         <div>
@@ -30,6 +46,10 @@
             <a href="{% url 'loginuser' %}">Se Connecter</a>
             {% endif %}
         </div>
-        {% endif %} {% block content %}{% endblock %}
+        {% endif %}
+        <div class="container mt-3">{% block content %}{% endblock %}</div>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </body>
 </html>
