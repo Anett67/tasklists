@@ -1,68 +1,92 @@
 {% extends "todo/base.html" %} {% block content %}
 
-<h1>{{ tasklist.title }}<span class="list-completion">{{ tasklist.completed_tasks_count }}/{{ tasklist.tasks_count }}</span></h1>
+<h1>{{ tasklist.title }} <span class="list-completion">{{ tasklist.completed_tasks_count }}/{{ tasklist.tasks_count }}</span></h1>
 
-<a href="{% url 'updatetasklist' tasklist.id %}">Modifier la liste</a>
+<div class="d-flex flex-wrap">
+    <button class="m-2 btn btn-primary">
+        <a class="text-white" href="{% url 'updatetasklist' tasklist.id %}">Modifier la liste</a>
+    </button>
 
-<form action="{% url 'archivetasklist' tasklist.id %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Archiver la liste</button>
-</form>
+    <form class="m-2" action="{% url 'archivetasklist' tasklist.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-warning" type="submit">Archiver la liste</button>
+    </form>
 
-<form action="{% url 'deletetasklist' tasklist.id %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Supprimer la liste</button>
-</form>
+    <form class="m-2" action="{% url 'deletetasklist' tasklist.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary" type="submit">Supprimer la liste</button>
+    </form>
 
-<form action="{% url 'createtask' tasklist.id %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Ajouter une tâche</button>
-</form>
+    <form class="m-2" action="{% url 'createtask' tasklist.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-success" type="submit">Ajouter une tâche</button>
+    </form>
+</div>
 
 {% if tasklist.tasks_to_do %}
 
-<h2>Tâches en cours</h2>
+<h2 class="mt-3">Tâches en cours</h2>
 
-<ul>
-    {% for task in tasklist.tasks_to_do %}
-    <li>
-        <span>{{ task.title }}</span>
-        <form action="{% url 'completetask' task.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Compléter</button>
-        </form>
-        <button>
-            <a href="{% url 'updatetask' task.id %}">Modifier</a>
-        </button>
-        <form action="{% url 'deletetask' task.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Tâche</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasklist.tasks_to_do %}
+        <tr>
+            <td><span>{{ task.title }}</span></td>
+            <td class="d-flex">
+                <form class="mx-2" action="{% url 'completetask' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-success" type="submit"><i class="fa-solid fa-check"></i></button>
+                </form>
+                <button class="mx-2 btn btn-primary">
+                    <a class="text-white" href="{% url 'updatetask' task.id %}"><i class="fa-solid fa-pencil"></i></i></a>
+                </button>
+                <form class="mx-2" action="{% url 'deletetask' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-{% endif %} {% if tasklist.tasks_to_to %}
+{% endif %} {% if tasklist.completed_tasks %}
 
-<h2>Tâches complété</h2>
+<h2 class="mt-3">Tâches complété</h2>
 
-<ul>
-    {% for task in tasklist.completed_tasks %}
-    <li>
-        <span>{{ task.title }}</span>
-        <form action="{% url 'reactivatetask' task.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Réactiver</button>
-        </form>
-        <button>
-            <a href="{% url 'updatetask' task.id %}">Modifier</a>
-        </button>
-        <form action="{% url 'deletetask' task.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Tâche</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasklist.tasks_to_do %}
+        <tr>
+            <td><span>{{ task.title }}</span></td>
+            <td class="d-flex">
+                <form action="{% url 'reactivatetask' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="mx-2 btn btn-success" type="submit"><i class="fa-solid fa-rotate-right"></i></button>
+                </form>
+                <button class="mx-2 btn btn-primary">
+                    <a class="text-white" href="{% url 'updatetask' task.id %}"><i class="fa-solid fa-pencil"></i></i></a>
+                </button>
+                <form class="mx-2" action="{% url 'deletetask' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endif %} {% endblock %}
