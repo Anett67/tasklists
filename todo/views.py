@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,7 +9,7 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
-from todo.models import Tasklist, Task
+from todo.models import Tasklist, Task, Profil, Theme
 from .forms import TasklistForm, TaskForm
 
 def signupuser(request):
@@ -166,3 +167,11 @@ def reactivatetask(request, task_pk):
         task.datecompleted = None
         task.save()
         return redirect('viewtasklist', tasklist_pk=task.tasklist_id)
+
+@login_required
+def themechange(request):
+    profil = get_object_or_404(Profil, user=request.user)
+    if request.method == 'POST':
+        profil.theme = request.POST['theme_id']
+        profil.save()
+        return HttpResponseRedirect(request.path_info)

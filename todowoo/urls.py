@@ -35,11 +35,13 @@ urlpatterns = [
     path('listes/<int:tasklist_pk>/activer', views.activatetasklist, name="activatetasklist"),
     path('listes/<int:tasklist_pk>/delete', views.deletetasklist, name="deletetasklist"),
 
-
     # Task
     path('listes/<int:tasklist_pk>/taches/nouveau/', views.createtask, name="createtask"),
     path('task/<int:task_pk>/edit', views.updatetask, name="updatetask"),
     path('task/<int:task_pk>/delete', views.deletetask, name="deletetask"),
     path('task/<int:task_pk>/complete', views.completetask, name="completetask"),
-    path('task/<int:task_pk>/reactivate', views.reactivatetask, name="reactivatetask")
+    path('task/<int:task_pk>/reactivate', views.reactivatetask, name="reactivatetask"),
+
+    # Theme
+    path('theme/change', views.themechange, name="themechange"),
 ]

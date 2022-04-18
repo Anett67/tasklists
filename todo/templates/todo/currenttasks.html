@@ -1,6 +1,10 @@
 {% extends "todo/base.html" %} {% block content %}
 <h1>Mes listes de tâches</h1>
 
+<button>
+    <a href="{% url 'createtasklist' %}">Ajouter une liste</a>
+</button>
+
 <ul>
     {% for list in tasklists %}
     <li>

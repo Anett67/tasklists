@@ -1,20 +1,34 @@
-{% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% load static %}
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" type="text/css" href="{% static user.profil.theme_url %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+        <title>Portfolio</title>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
 
-<a href="{% url 'currenttasks' %}">Listes actives</a>
-<a href="{% url 'archivedtasks' %}">Listes archivées</a>
-<p>Vous est connecté en tant que: {{ user.username }}</p>
+        <a href="{% url 'currenttasks' %}">Listes actives</a>
+        <a href="{% url 'archivedtasks' %}">Listes archivées</a>
+        <p>Vous est connecté en tant que: {{ user.username }}</p>
+        <form action="{% url 'logoutuser' %}" method="POST">
+            {% csrf_token %}
+            <button btn="btn btn-primary" type="submit">Se déconnecter</button>
+        </form>
 
-<form action="{% url 'logoutuser' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Se déconnecter</button>
-</form>
-
-{% else %}
-<div>
-    {% if request.resolver_match.url_name == 'loginuser' %}
-    <a href="{% url 'signupuser' %}">Créer un compte</a>
-    {% else %}
-    <a href="{% url 'loginuser' %}">Se Connecter</a>
-    {% endif %}
-</div>
-{% endif %} {% block content %}{% endblock %}
+        {% else %}
+        <div>
+            {% if request.resolver_match.url_name == 'loginuser' %}
+            <a href="{% url 'signupuser' %}">Créer un compte</a>
+            {% else %}
+            <a href="{% url 'loginuser' %}">Se Connecter</a>
+            {% endif %}
+        </div>
+        {% endif %} {% block content %}{% endblock %}
+    </body>
+</html>

@@ -1,6 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Theme(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.name
+
+class Profil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self) -> str:
+        return self.user.username
+
+    def theme_url(self):
+        if not self.theme:
+            return 'css/bootstrap.min.css'
+
+        return 'css/%s/bootstrap.min.css' % self.theme.name
+
 class Tasklist(models.Model):
     title = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
@@ -33,3 +52,5 @@ class Task(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
