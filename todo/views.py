@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from todo.models import Tasklist, Task, Profil, Theme
-from .forms import TasklistForm, TaskForm, ProfileForm
+from todo.models import Tasklist, Task, Profil
+from .forms import LoginForm, TasklistForm, TaskForm, ProfileForm
 
 def signupuser(request):
     if request.method == "GET":
@@ -58,7 +58,7 @@ def logoutuser(request):
 
 def loginuser(request):
         if request.method == "GET":
-            return render(request, 'todo/login.html', {'form':AuthenticationForm()})
+            return render(request, 'todo/login.html', {'form':LoginForm()})
         else:
             user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
             if user is None:
