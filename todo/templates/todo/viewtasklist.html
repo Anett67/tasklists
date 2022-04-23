@@ -31,7 +31,12 @@
         <tbody>
             {% for task in tasklist.tasks_to_do %}
             <tr>
-                <td><span>{{ task.title }}</span></td>
+                <td>
+                    <span>{{ task.title }}</span>
+                    {% if task.priority %}
+                        <span class="mx-2 badge bg-success">Important</span>
+                    {% endif %}
+                </td>
                 <td class="d-flex align-items-end">
                     <form class="mx-2" action="{% url 'completetask' task.id %}" method="POST">
                         {% csrf_token %}
@@ -59,7 +64,12 @@
     <tbody>
         {% for task in tasklist.completed_tasks %}
         <tr>
-            <td><span>{{ task.title }}</span></td>
+            <td>
+                <span>{{ task.title }}</span>
+                {% if task.priority %}
+                    <span class="mx-2 badge bg-success">Important</span>
+                {% endif %}
+            </td>
             <td class="d-flex align-items-end actions">
                 <form action="{% url 'reactivatetask' task.id %}" method="POST">
                     {% csrf_token %}
