@@ -40,12 +40,18 @@
                 <td class="d-flex align-items-end">
                     <form class="mx-2" action="{% url 'completetask' task.id %}" method="POST">
                         {% csrf_token %}
-                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-check"></i></button>
+                        <button class="btn btn-success" type="submit" title="Compléter">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
                     </form>
-                    <a class="mx-2 btn btn-primary text-white" href="{% url 'updatetask' task.id %}"><i class="fa-solid fa-pencil"></i></i></a>
+                    <a class="mx-2 btn btn-primary text-white" href="{% url 'updatetask' task.id %}" title="Modifier">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
                     <form class="mx-2" action="{% url 'deletetask' task.id %}" method="POST">
                         {% csrf_token %}
-                        <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="btn btn-secondary" type="submit" title="Supprimer">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -73,14 +79,18 @@
             <td class="d-flex align-items-end actions">
                 <form action="{% url 'reactivatetask' task.id %}" method="POST">
                     {% csrf_token %}
-                    <button class="mx-2 btn btn-success" type="submit"><i class="fa-solid fa-rotate-right"></i></button>
+                    <button class="mx-2 btn btn-success" type="submit" title="Réactiver">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
                 </form>
-                <button class="mx-2 btn btn-primary">
+                <button class="mx-2 btn btn-primary" title="Modifier">
                     <a class="text-white" href="{% url 'updatetask' task.id %}"><i class="fa-solid fa-pencil"></i></i></a>
                 </button>
                 <form class="mx-2" action="{% url 'deletetask' task.id %}" method="POST">
                     {% csrf_token %}
-                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="btn btn-secondary" type="submit" title="Supprimer">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
                 </form>
             </td>
         </tr>
