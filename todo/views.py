@@ -85,7 +85,7 @@ def createtasklist(request):
 def createtask(request, tasklist_pk):
     if request.method == "GET":
         tasklist = get_object_or_404(Tasklist, pk=tasklist_pk)
-        return render(request, 'todo/createtask.html', {'form':TaskForm(), 'tasklist_pk': tasklist_pk })
+        return render(request, 'todo/createtask.html', {'form':TaskForm(), 'tasklist': tasklist })
     else:
         try:
             form = TaskForm(request.POST)
