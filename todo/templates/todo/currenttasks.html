@@ -5,6 +5,8 @@
     <a class="text-white" href="{% url 'createtasklist' %}">Ajouter une liste</a>
 </button>
 
+{% if tasklists %}
+
 <table class="table mt-3">
     <thead>
         <tr>
@@ -21,4 +23,5 @@
         {% endfor %}
     </tbody>
 </table>
-{% endblock %}
+
+{% endif %} {% endblock %}

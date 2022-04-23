@@ -1,3 +1,4 @@
+from cProfile import label
 from django.forms import ModelForm
 from .models import Tasklist, Task, Profil
 from crispy_forms.helper import FormHelper
@@ -44,9 +45,9 @@ class ProfileForm(ModelForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}), label='Mot de passe')
 
 class RegisterForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}), label="Mot de passe")
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}), label='Confirmation du mot de passe')
