@@ -26,7 +26,7 @@ def signupuser(request):
                 return redirect('currenttasks')
             except IntegrityError:
                 return render(request, 'todo/signupuser.html', {
-                    'form':UserCreationForm(), 
+                    'form':RegisterForm(), 
                     'error':'Un compte avec ce nom existe déjà.'
                 })
         else: 

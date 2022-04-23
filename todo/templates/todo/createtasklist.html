@@ -2,6 +2,6 @@
 
 <h1>Créer une liste de tâches</h1>
 
-<h2>{{ error }}</h2>
+<span class="text-danger">{{ error }}</span>
 
 {% csrf_token %} {% crispy form %} {% endblock %}

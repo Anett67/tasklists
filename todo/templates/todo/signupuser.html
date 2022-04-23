@@ -2,7 +2,7 @@
 
 <h1>Créer un compte</h1>
 
-<h2>{{ error }}</h2>
+<span class="text-danger">{{ error }}</span>
 
 <form action="" method="POST">
     {% csrf_token %} {{ form.as_p }}
