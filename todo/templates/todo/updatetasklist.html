@@ -1,12 +1,7 @@
-{% extends "todo/base.html" %} {% block content %}
+{% extends "todo/base.html" %} {% block content %}{% load crispy_forms_tags %}
 
 <h1>Modifier {{ tasklist.title }}</h1>
 
 <h2>{{ error }}</h2>
 
-<form action="" method="POST">
-    {% csrf_token %} {{ form.as_p }}
-    <button class="btn btn-primary" type="submit">Enregistrer</button>
-</form>
-
-{% endblock %}
+{% crispy form %} {% endblock %}

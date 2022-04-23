@@ -4,9 +4,4 @@
 
 <h2>{{ error }}</h2>
 
-<form action="" method="POST">
-    {% csrf_token %} {% crispy form %}
-    <button class="btn btn-primary" type="submit">Enregistrer</button>
-</form>
-
-{% endblock %}
+{% crispy form %} {% endblock %}
